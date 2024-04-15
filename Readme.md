@@ -15,9 +15,13 @@ To Load Env:  go get github.com/joho/godotenv
 To Load Cobra CLI
 go get github.com/spf13/cobra
 
-install and run command
+install and run command in the beginning to get the root cli
 go install github.com/spf13/cobra-cli@latest
 cobra-cli init
+
+to migrate code using cli command
+run := go run main.go migrate
+
 
 //used in router
 To Load CORS (Cross Origin Resource Sharing) 
@@ -25,5 +29,5 @@ go get github.com/gin-contrib/cors
 
 
 
-/ cli for cobra cli 
+// cli for cobra cli 
 
