@@ -31,3 +31,7 @@ go get github.com/gin-contrib/cors
 
 // cli for cobra cli 
 
+//postman 
+![image](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/1a5ae66f-d54a-418f-af42-d9960babe76d)
+
+
