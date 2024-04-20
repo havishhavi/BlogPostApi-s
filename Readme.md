@@ -27,7 +27,16 @@ run := go run main.go migrate
 To Load CORS (Cross Origin Resource Sharing) 
 go get github.com/gin-contrib/cors
 
+//for password encryption 
+go get golang.org/x/crypto/bcrypt
 
+//jwt go
+go get github.com/dgrijalva/jwt-go
 
 // cli for cobra cli 
 
+
+//ask sir reflection : meta programming : at runtime if i need to change the data we use reflection : introspect  itself: we use reflection to change the data, manipulate data or type of data at run time.
+
+
+//middleware:= goes to create post before it goes to middleware the post 

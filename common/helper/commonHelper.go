@@ -34,10 +34,6 @@ func Trimmer(structure interface{}) {
 	}
 }
 
-/*
-Developer: mudit
-Purmpse: convert string to in
-*/
 func ConvertStoI(s string) (int, error) {
 	number, err := strconv.Atoi(s)
 	if err != nil {

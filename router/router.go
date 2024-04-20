@@ -42,9 +42,11 @@ func SetUpRouter() *gin.Engine {
 	{
 		var UserController = new(controller.UserController)
 		user.POST("/register", UserController.Register)
-		// 	user.POST("/login", UserController.Login)
+		user.POST("/login", UserController.Login)
 
 	}
+	//how you login user and authenticate : JWT authenntication using user id using signingmethodhs256  inmiddleware
+	// how to handle if token is expired : relogin or by using refresh token
 
 	return r
 }

@@ -10,15 +10,15 @@ import (
 
 // to load env variables
 func loadEnv() {
-	//why over load?
+	//why over load? // directly loading the file
 	err := godotenv.Overload(".env")
 	if err != nil {
 		log.Fatal("error loading .enc file", err)
 	}
 }
 
-// explain this
 func GetEnvWithKey(key string, defaultValue string) string {
+	//syscall
 	keyVal, found := syscall.Getenv(key)
 	if !found {
 		syscall.Setenv(key, defaultValue)

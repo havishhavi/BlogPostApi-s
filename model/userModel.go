@@ -1,6 +1,11 @@
 package model
 
-import "www.blog.com/config"
+import (
+	"errors"
+
+	"gorm.io/gorm"
+	"www.blog.com/config"
+)
 
 type User struct {
 	ID       uint
@@ -28,6 +33,59 @@ func FindUserByEmail(Email string) (int64, error) {
 		return 0, result.Error
 	}
 	return count, nil
+}
+
+func FindUserDataByEmail(Email string) (*User, error) {
+	var user *User = new(User)
+
+	//connect db,run query,check errors, return
+	db := config.GoConnect()
+	//Take returns record found by db
+	if result := db.Where("email= ? AND active = ? ", Email, 1).Take(&user); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, result.Error
+	}
+	return user, nil
+}
+
+func FindUserByID(id uint) (*User, error) {
+	var user *User = new(User)
+
+	db := config.GoConnect()
+	if result := db.Where("id = ? AND active = ?", id, 1).Take(&user); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, result.Error
+	}
+	return user, nil
+}
+
+func UpdateToken(UserId uint, JwtToken string) (bool, error) {
+	db := config.GoConnect()
+	data, err := FindUserByID(UserId)
+	if err != nil {
+		return false, err
+	}
+	if data != nil {
+		data.JwtToken = JwtToken
+		// if result := db.Save(&user_data); result.Error != nil {
+		// 	return false, result.Error
+		// }
+		//fmt.Println(user_data)
+		if result := db.Model(&User{}).Where("id=?", UserId).Updates(&data); result.Error != nil {
+			return false, result.Error
+		} else if result.RowsAffected == 0 {
+			err := errors.New("record not updated")
+			return false, err
+		}
+		return true, nil
+	} else {
+		return false, errors.New("user not found")
+	}
+
 }
 
 //log labels : info log , warning log and error log

@@ -2,10 +2,13 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"www.blog.com/common/handle"
 	"www.blog.com/common/helper"
+	"www.blog.com/common/service"
 	"www.blog.com/config"
 	"www.blog.com/dto"
 	"www.blog.com/model"
@@ -13,6 +16,11 @@ import (
 
 type UserController struct{}
 
+/*
+Register user
+
+function: Register
+*/
 func (con UserController) Register(c *gin.Context) {
 
 	var InputDTO dto.Register
@@ -22,7 +30,8 @@ func (con UserController) Register(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusBadRequest, msg)
 		return
 	}
-	// this Trimmer method removes the white spacxe from the given details from the front
+	// this Trimmer method removes the white spaces from the given details from the front
+
 	helper.Trimmer(&InputDTO)
 
 	//Finduserbyemail check if the email already exists
@@ -39,6 +48,7 @@ func (con UserController) Register(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+
 	// encrypting the password using Pwdencryprion method
 	password, err := helper.PwdEncryption(InputDTO.Password)
 	if err != nil {
@@ -75,4 +85,72 @@ func (con UserController) Register(c *gin.Context) {
 	response := helper.Success(true, "ok", user)
 
 	c.JSON(http.StatusCreated, response)
+}
+
+/*
+Login user
+
+function: login
+*/
+
+func (con UserController) Login(c *gin.Context) {
+	/*
+	   Login user
+	   Operations: Declare a variable for data Transfer Object
+	   bind json data to variable
+	   get user data using email and handle errors
+	   compare hash and password (database password and received password)
+	   generate JWT token
+	   return json response
+	   function: login
+	*/
+
+	var InputDTO dto.Login
+
+	//binding data from json to inputdto
+	if errDTO := c.ShouldBindJSON(&InputDTO); errDTO != nil {
+		msg := handle.Error(errDTO)
+		c.AbortWithStatusJSON(http.StatusBadRequest, msg)
+		return
+	}
+	//remove extra spaces from the front of given values
+	helper.Trimmer(&InputDTO)
+
+	data, err := model.FindUserDataByEmail(InputDTO.Email)
+	if err != nil {
+		//helper.ELog.Error(err.Error())
+		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	if data == nil {
+		response := helper.Error("msg", "User not found", helper.EmptyObj{})
+		c.AbortWithStatusJSON(http.StatusBadRequest, response)
+		return
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(data.Password), []byte(InputDTO.Password)); err != nil {
+		response := helper.Error("Invalid Password", "password is incorrect", helper.EmptyObj{})
+		//helper.ELog.Infor(err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	//Generating JWT token
+
+	JwtToken := service.GenerateToken(strconv.Itoa(int(data.ID)), 1)
+
+	if _, err := model.UpdateToken(data.ID, JwtToken); err != nil {
+		msg := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		//helper.ELog.Error(err.Error())
+		c.JSON(http.StatusBadRequest, msg)
+		return
+	}
+
+	data.Password = ""
+	data.JwtToken = JwtToken
+
+	response := helper.Success(true, "ok", data)
+	c.JSON(http.StatusOK, response)
+
 }
