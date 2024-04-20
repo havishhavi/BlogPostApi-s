@@ -36,7 +36,28 @@ go get github.com/dgrijalva/jwt-go
 // cli for cobra cli 
 
 
-//ask sir reflection : meta programming : at runtime if i need to change the data we use reflection : introspect  itself: we use reflection to change the data, manipulate data or type of data at run time.
+//reflection : meta programming : at runtime if i need to change the data we use reflection : introspect  itself: we use reflection to change the data, manipulate data or type of data at run time.
 
+Login api 
+![image](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/dc756c57-2171-45ef-badf-12b683087224)
+
+
+
+{
+    "status": true,
+    "message": "ok",
+    "errors": null,
+    "data": {
+        "ID": 3,
+        "Name": "meena",
+        "Email": "meena@gmail.com",
+        "Password": "",
+        "JwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU0VSX0lEIjoiMyIsIlJPTEVfSUQiOjEsImV4cCI6MTc0NTE1OTY3MywiaWF0IjoxNzEzNTM3MjczLCJpc3MiOiJKV3QgQXV0aG9yaXphdGlvbiJ9.kBshpIji9yxH0rgXBiYjxSNmiP4CPt8d6oP_-gCw7bk",
+        "Mobile": 9999999999,
+        "Active": 1,
+        "Created": "2024-04-19T10:27:52.227-04:00",
+        "Updated": "2024-04-19T10:27:52.227-04:00"
+    }
+}
 
 //middleware:= goes to create post before it goes to middleware the post 
