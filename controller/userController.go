@@ -37,13 +37,14 @@ func (con UserController) Register(c *gin.Context) {
 	//Finduserbyemail check if the email already exists
 	result, err := model.FindUserByEmail(InputDTO.Email)
 	if err != nil {
+		helper.WLog.Warn(err.Error())
 		response := helper.Error("SQL error", err.Error(), helper.EmptyObj{})
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
 
 	if result != 0 {
-		//helper.Elog.Error("user already exist")
+		helper.ELog.Error("user already exist")
 		response := helper.Error("User error", "user Already exist", helper.EmptyObj{})
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -51,6 +52,7 @@ func (con UserController) Register(c *gin.Context) {
 
 	// encrypting the password using Pwdencryprion method
 	password, err := helper.PwdEncryption(InputDTO.Password)
+	helper.ELog.Error("encripton error")
 	if err != nil {
 		response := helper.Error("encryption error", err.Error(), helper.EmptyObj{})
 		c.JSON(http.StatusBadGateway, response)
@@ -60,6 +62,7 @@ func (con UserController) Register(c *gin.Context) {
 	// convert string to int64
 	mobile_no, err := helper.ConvertStoI(InputDTO.Mobile)
 	if err != nil {
+		helper.ELog.Error(err.Error())
 		response := helper.Error("invalid mobile no", err.Error(), helper.EmptyObj{})
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -77,7 +80,7 @@ func (con UserController) Register(c *gin.Context) {
 	//database conn
 	db := config.GoConnect()
 	if result := db.Create(&user); result.Error != nil {
-		//helper.Elog.Error(result.Error.Error())
+		helper.ELog.Error(result.Error.Error())
 		response := helper.Error("Sql Error", result.Error.Error(), helper.EmptyObj{})
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -118,7 +121,7 @@ func (con UserController) Login(c *gin.Context) {
 
 	data, err := model.FindUserDataByEmail(InputDTO.Email)
 	if err != nil {
-		//helper.ELog.Error(err.Error())
+		helper.ELog.Error(err.Error())
 		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
 		c.JSON(http.StatusBadRequest, response)
 		return
@@ -131,7 +134,7 @@ func (con UserController) Login(c *gin.Context) {
 
 	if err := bcrypt.CompareHashAndPassword([]byte(data.Password), []byte(InputDTO.Password)); err != nil {
 		response := helper.Error("Invalid Password", "password is incorrect", helper.EmptyObj{})
-		//helper.ELog.Infor(err.Error())
+		helper.ILog.Info(err.Error())
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -142,7 +145,7 @@ func (con UserController) Login(c *gin.Context) {
 
 	if _, err := model.UpdateToken(data.ID, JwtToken); err != nil {
 		msg := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
-		//helper.ELog.Error(err.Error())
+		helper.ELog.Error(err.Error())
 		c.JSON(http.StatusBadRequest, msg)
 		return
 	}

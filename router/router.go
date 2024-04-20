@@ -4,6 +4,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"www.blog.com/controller"
+	"www.blog.com/middleware"
 )
 
 // what the code in it??
@@ -47,7 +48,22 @@ func SetUpRouter() *gin.Engine {
 	}
 	//how you login user and authenticate : JWT authenntication using user id using signingmethodhs256  inmiddleware
 	// how to handle if token is expired : relogin or by using refresh token
+	//normally tokens life is for specified time but refrest token can be used to give time to login , we send two tokens
+	// when we directly create a post controller  without a middle ware we will be
+	// post := r.Group("api/blog/post")
+	// {
+	// 	var PostController = new(controller.PostController)
+	// 	post.POST("/create_post", PostController.CreatePost)
 
+	// }
+	//middleware???  why defination to authorixe jwt??
+	post := r.Group("api/blog/post")
+	//middleware calling
+	post.Use(middleware.AuthorizeJWT())
+	{
+		var PostController = new(controller.PostController)
+		post.POST("/create_post", PostController.CreatePost)
+	}
 	return r
 }
 

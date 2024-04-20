@@ -33,6 +33,10 @@ go get golang.org/x/crypto/bcrypt
 //jwt go
 go get github.com/dgrijalva/jwt-go
 
+
+//for logging the info, errors and warning
+go get go.uber.org/zap
+
 // cli for cobra cli 
 
 
@@ -40,3 +44,6 @@ go get github.com/dgrijalva/jwt-go
 
 
 //middleware:= goes to create post before it goes to middleware the post 
+
+
+

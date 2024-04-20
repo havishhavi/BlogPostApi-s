@@ -12,6 +12,6 @@ func Migrate() {
 
 	db := config.GoConnect()
 	//
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.User{}, &model.Post{})
 	fmt.Println("Migration Successfull")
 }
