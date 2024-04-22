@@ -18,8 +18,25 @@ type User struct {
 	Date     `gorm:"embedded"`
 }
 
+// new user model to extract the details when associated with post model
+type UserData struct {
+	ID    uint
+	Name  string `gorm:"type:varchar(250)"`
+	Email string `gorm:"type:varchar(250);unique;not null"`
+	//Password string `gorm:"type:varchar(250); not null"`
+	JwtToken string
+	Mobile   int `gorm:"not null"`
+	Active   int `gorm:"type:tinyint(10);default:1"`
+	Date     `gorm:"embedded"`
+}
+
 // the table name is users when we declare in table database
 func (User) Tablename() string {
+	return "users"
+}
+
+// to let the model know that userdata is also a table from users
+func (UserData) TableName() string {
 	return "users"
 }
 

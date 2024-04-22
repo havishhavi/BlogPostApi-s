@@ -56,13 +56,15 @@ func SetUpRouter() *gin.Engine {
 	// 	post.POST("/create_post", PostController.CreatePost)
 
 	// }
-	//middleware???  why defination to authorixe jwt??
+	//middleware???  why defination to authorixe jwt?? to check if the jwt token the user sending is correct or not
 	post := r.Group("api/blog/post")
 	//middleware calling
 	post.Use(middleware.AuthorizeJWT())
 	{
 		var PostController = new(controller.PostController)
 		post.POST("/create_post", PostController.CreatePost)
+		//sir why dint we use path param to get the value?
+		post.GET("/view_post/:Postid", PostController.ViewPost)
 	}
 	return r
 }

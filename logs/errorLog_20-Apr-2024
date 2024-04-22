@@ -1,0 +1,2 @@
+{"level":"ERROR","time":"2024-04-20T18:31:48.717-0400","callerKey":"controller/postController.go:68","message":"Key: 'ViewPost.Postid' Error:Field validation for 'Postid' failed on the 'required' tag"}
+{"level":"ERROR","time":"2024-04-20T18:58:45.647-0400","callerKey":"controller/postController.go:68","message":"Key: 'ViewPost.Postid' Error:Field validation for 'Postid' failed on the 'required' tag"}

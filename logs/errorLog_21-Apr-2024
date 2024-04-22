@@ -1,0 +1,2 @@
+{"level":"ERROR","time":"2024-04-21T12:32:41.083-0400","callerKey":"controller/postController.go:82","message":"Error 1146 (42S02): Table 'blogex.user_data' doesn't exist"}
+{"level":"ERROR","time":"2024-04-21T12:33:57.803-0400","callerKey":"controller/postController.go:82","message":"Error 1146 (42S02): Table 'blogex.user_data' doesn't exist"}

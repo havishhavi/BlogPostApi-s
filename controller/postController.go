@@ -53,3 +53,37 @@ func (con PostController) CreatePost(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+// View Post by post id
+/*
+create a Inputdto variable and bind uri to that variable to get the data
+check for errors
+extract the post data by id and display
+*/
+
+func (con PostController) ViewPost(c *gin.Context) {
+	var inputDTO dto.ViewPost
+	//ShouldBindUri binds the passed struct pointer
+
+	errDTO := c.ShouldBindUri(&inputDTO)
+	if errDTO != nil {
+		//helper.ELog.Error(errDTO.Error())
+		msg := handle.Error(errDTO)
+		c.AbortWithStatusJSON(http.StatusBadRequest, msg)
+		return
+	}
+	helper.Trimmer(&inputDTO)
+
+	post_data, err := model.FindPostById(inputDTO.Postid)
+	if err != nil {
+		helper.ELog.Error(err.Error())
+		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+
+	}
+	response := helper.Success(true, "ok", post_data)
+
+	c.JSON(http.StatusOK, response)
+
+}
