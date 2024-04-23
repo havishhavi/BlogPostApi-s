@@ -65,6 +65,8 @@ func SetUpRouter() *gin.Engine {
 		post.POST("/create_post", PostController.CreatePost)
 		//sir why dint we use path param to get the value?
 		post.GET("/view_post/:Postid", PostController.ViewPost)
+		post.GET("/viewallpost", PostController.UserPosts)
+		post.GET("/viewalluserposts", PostController.AllUserPosts)
 	}
 	return r
 }

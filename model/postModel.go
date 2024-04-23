@@ -46,6 +46,22 @@ func FindPostById(post_Id uint) (*PostUser, error) {
 
 }
 
+// get all the post data
+func FindallPostData() ([]PostUser, error) {
+	var users_Posts []PostUser
+
+	db := config.GoConnect().Debug()
+	if result := db.Where("active =?", 1).Preload("User").Find(&users_Posts); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, result.Error
+	}
+	return users_Posts, nil
+}
+
+//get the
+
 // to get the data of just posts based on post id we use
 // func FindPostDataById(post_id int) (*Post, error) {
 // 	var post_user *Post = new(Post)

@@ -87,3 +87,38 @@ func (con PostController) ViewPost(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+//View All User Posts
+
+/*
+create a Inputdto variable and bind uri to that variable to get the data
+check for errors
+extract the post data by id and display
+*/
+func (con PostController) UserPosts(c *gin.Context) {
+	user_id := service.GetUserId(c.GetHeader("Token"))
+	allPosts, err := model.FindAllPostsByUserId(user_id)
+	if err != nil {
+		helper.ELog.Error(err.Error())
+		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := helper.Success(true, "ok", allPosts)
+	c.JSON(http.StatusOK, response)
+
+}
+
+// viewall the users posts from loggedin user
+func (con PostController) AllUserPosts(c *gin.Context) {
+	allPosts, err := model.FindallPostData()
+	if err != nil {
+		helper.ELog.Error(err.Error())
+		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := helper.Success(true, "ok", allPosts)
+	c.JSON(http.StatusOK, response)
+
+}

@@ -24,10 +24,10 @@ type UserData struct {
 	Name  string `gorm:"type:varchar(250)"`
 	Email string `gorm:"type:varchar(250);unique;not null"`
 	//Password string `gorm:"type:varchar(250); not null"`
-	JwtToken string
-	Mobile   int `gorm:"not null"`
-	Active   int `gorm:"type:tinyint(10);default:1"`
-	Date     `gorm:"embedded"`
+	//JwtToken string
+	Mobile int `gorm:"not null"`
+	Active int `gorm:"type:tinyint(10);default:1"`
+	Date   `gorm:"embedded"`
 }
 
 // the table name is users when we declare in table database
@@ -38,6 +38,13 @@ func (User) Tablename() string {
 // to let the model know that userdata is also a table from users
 func (UserData) TableName() string {
 	return "users"
+}
+
+//one to many relationship
+
+type UserPost struct {
+	UserData `gorm:"embedded"`
+	Post     []Post `gorm:"reference:id;foreignKey:user_id"`
 }
 
 func FindUserByEmail(Email string) (int64, error) {
@@ -107,3 +114,15 @@ func UpdateToken(UserId uint, JwtToken string) (bool, error) {
 
 //log labels : info log , warning log and error log
 // loga are used when we are in server and we dont know whats errors are occured so the log file is important
+
+func FindAllPostsByUserId(user_id uint) (*UserPost, error) {
+	var user_post *UserPost = new(UserPost)
+	db := config.GoConnect().Debug()
+	if result := db.Where("id=? AND active = ?", user_id, 1).Preload("Post").Take(&user_post); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
+		return nil, result.Error
+	}
+	return user_post, nil
+}
