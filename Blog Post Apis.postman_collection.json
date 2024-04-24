@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "46e91e06-ae0c-4f26-aee5-ff2f6d5190c3",
+		"name": "Blog Post Apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33095696"
+	},
+	"item": [
+		{
+			"name": "register blog",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"meena\",\r\n    \"Email\": \"meena@gmail.com\",\r\n    \"Password\": \"123meena\",\r\n    \"PasswordConfirm\": \"123meena\",\r\n    \"mobile\": \"9999999999\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/api/blog/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"meena@gmail.com\",\r\n    \"Password\": \"123meena\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/api/blog/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU0VSX0lEIjoiMyIsIlJPTEVfSUQiOjEsImV4cCI6MTc0NTE1OTY3MywiaWF0IjoxNzEzNTM3MjczLCJpc3MiOiJKV3QgQXV0aG9yaXphdGlvbiJ9.kBshpIji9yxH0rgXBiYjxSNmiP4CPt8d6oP_-gCw7bk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\":\"My third Post\",\r\n    \"Post\":\"need to check my feelings are good or bad accouding time\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/api/blog/post/create_post",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"post",
+						"create_post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UsersAllposts",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU0VSX0lEIjoiMyIsIlJPTEVfSUQiOjEsImV4cCI6MTc0NTE1OTY3MywiaWF0IjoxNzEzNTM3MjczLCJpc3MiOiJKV3QgQXV0aG9yaXphdGlvbiJ9.kBshpIji9yxH0rgXBiYjxSNmiP4CPt8d6oP_-gCw7bk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8087/api/blog/post/viewallpost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"post",
+						"viewallpost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "alluserspost",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU0VSX0lEIjoiMyIsIlJPTEVfSUQiOjEsImV4cCI6MTc0NTE1OTY3MywiaWF0IjoxNzEzNTM3MjczLCJpc3MiOiJKV3QgQXV0aG9yaXphdGlvbiJ9.kBshpIji9yxH0rgXBiYjxSNmiP4CPt8d6oP_-gCw7bk",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8087/api/blog/post/viewallpost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"post",
+						"viewallpost"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update post",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVU0VSX0lEIjoiMyIsIlJPTEVfSUQiOjEsImV4cCI6MTc0NTE1OTY3MywiaWF0IjoxNzEzNTM3MjczLCJpc3MiOiJKV3QgQXV0aG9yaXphdGlvbiJ9.kBshpIji9yxH0rgXBiYjxSNmiP4CPt8d6oP_-gCw7bk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\": 2,\r\n    \"Title\": \"last one was my bad\",\r\n    \"Post\":\"this is the right one yeah\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8087/api/blog/post//Edit_post/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8087",
+					"path": [
+						"api",
+						"blog",
+						"post",
+						"",
+						"Edit_post",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete post",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "UserLogout",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
