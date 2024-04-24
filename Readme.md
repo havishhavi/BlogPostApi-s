@@ -45,5 +45,15 @@ go get go.uber.org/zap
 
 //middleware:= goes to create post before it goes to middleware the post 
 
+//Delete post and Update post
+
+![image](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/cd41f4bd-45bb-43ea-9733-12bea135113f)
+
+//
+
+![image](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/64d89960-83ab-4340-85ea-bde1323d7e2a)
+
+
+
 
 
