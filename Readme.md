@@ -44,6 +44,13 @@ go get go.uber.org/zap
 
 
 //middleware:= goes to create post before it goes to middleware the post 
+// view all users posts
+![image](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/851f92cd-da18-439a-992c-9b05efb5fc94)
+
+
+//view users all posts
+
+![Screenshot 2024-04-23 121257](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/9e5e87c0-3dbb-4aa4-a569-d754b3228c4e)
 
 
 
