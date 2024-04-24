@@ -46,4 +46,8 @@ go get go.uber.org/zap
 //middleware:= goes to create post before it goes to middleware the post 
 
 
+Logout
+![Capture](https://github.com/havishhavi/BlogPostApi-s/assets/164078377/7d9b585e-5faf-417c-ad03-5c32d6cebe89)
+
+
 
