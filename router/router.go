@@ -71,6 +71,15 @@ func SetUpRouter() *gin.Engine {
 		post.DELETE("/delete_post/:Postid", PostController.DeletePost)
 		post.PUT("/Edit_post", PostController.EditPost)
 	}
+
+	user_log := r.Group("api/blog/user")
+	//middleware calling
+	user_log.Use(middleware.AuthorizeJWT())
+	{
+		var UserController = new(controller.UserController)
+		user_log.POST("/logout", UserController.Logout)
+	}
+
 	return r
 }
 

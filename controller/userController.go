@@ -157,3 +157,17 @@ func (con UserController) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+func (con UserController) Logout(c *gin.Context) {
+	userid := service.GetUserId(c.GetHeader("Token"))
+	db := config.GoConnect()
+	if result := db.Model(&model.User{}).Where("id = ?", userid).Update("JwtToken", nil); result.Error != nil {
+		helper.ELog.Error(result.Error.Error())
+		response := helper.Error("Sql Error", result.Error.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := helper.Success(true, "ok", "Logout Successfull")
+	c.JSON(http.StatusOK, response)
+
+}
