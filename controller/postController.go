@@ -122,3 +122,54 @@ func (con PostController) AllUserPosts(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+//delete and update posts in the user
+
+func (con PostController) DeletePost(c *gin.Context) {
+	var inputDto dto.ViewPost
+	errDTO := c.ShouldBindUri(&inputDto)
+	if errDTO != nil {
+		msg := handle.Error(errDTO)
+		c.AbortWithStatusJSON(http.StatusBadRequest, msg)
+		return
+	}
+	helper.Trimmer(&inputDto)
+	user_id := service.GetUserId(c.GetHeader("Token"))
+	_, err := model.DeletePostByPostId(inputDto.Postid, user_id)
+	if err != nil {
+		helper.ELog.Error(err.Error())
+		response := helper.Error("SQL Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+	response := helper.Success(true, "ok", "post deleted successfully")
+	c.JSON(http.StatusOK, response)
+}
+
+func (con PostController) EditPost(c *gin.Context) {
+	var InputDto dto.EditPost
+	if errDto := c.ShouldBindJSON(&InputDto); errDto != nil {
+		msg := handle.Error(errDto)
+		c.AbortWithStatusJSON(http.StatusBadRequest, msg)
+		return
+	}
+	helper.Trimmer(&InputDto)
+	userId := service.GetUserId(c.GetHeader("Token"))
+	status, err := model.UpdateUserPost(userId, InputDto.Id, InputDto.Title, InputDto.Post)
+	if err != nil {
+		helper.ELog.Error(err.Error())
+		response := helper.Error("Sql Error", err.Error(), helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	if !status {
+		result := helper.Error("msg", "there is a issue in the post edit", helper.EmptyObj{})
+		c.JSON(http.StatusBadRequest, result)
+		return
+	}
+
+	response := helper.Success(true, "ok", "post Updated Successfully")
+	c.JSON(http.StatusOK, response)
+
+}

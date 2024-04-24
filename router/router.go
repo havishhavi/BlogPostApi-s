@@ -64,9 +64,12 @@ func SetUpRouter() *gin.Engine {
 		var PostController = new(controller.PostController)
 		post.POST("/create_post", PostController.CreatePost)
 		//sir why dint we use path param to get the value?
+		// by using shouldbind uri we are able to do the validations on the data given by the browser
 		post.GET("/view_post/:Postid", PostController.ViewPost)
 		post.GET("/viewallpost", PostController.UserPosts)
 		post.GET("/viewalluserposts", PostController.AllUserPosts)
+		post.DELETE("/delete_post/:Postid", PostController.DeletePost)
+		post.PUT("/Edit_post", PostController.EditPost)
 	}
 	return r
 }

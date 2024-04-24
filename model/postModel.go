@@ -77,3 +77,34 @@ func FindallPostData() ([]PostUser, error) {
 // 	return post_user, nil
 
 // }
+
+func DeletePostByPostId(postId uint, user_id uint) (bool, error) {
+	db := config.GoConnect()
+	var post Post
+	if result := db.Where("id = ? AND user_id =? ", postId, user_id).Delete(&post); result.Error != nil {
+		return false, result.Error
+		//we are checking if no rows affected as gorm returns error, rows affected and data if no rows affected == 0 then no change is performed
+	} else if result.RowsAffected == 0 {
+		err := errors.New("no record affected/already deleted")
+		return false, err
+	}
+	return true, nil
+
+}
+
+func UpdateUserPost(UserId uint, post_Id uint, postvar string, title string) (bool, error) {
+	db := config.GoConnect().Debug()
+	var post Post
+	post.Post = postvar
+	post.Title = title
+	//post.UserID = UserId
+	post.ID = post_Id
+
+	if result := db.Model(&Post{}).Where("id = ? AND user_id = ?", post.ID, UserId).Updates(&post); result.Error != nil {
+		return false, result.Error
+	} else if result.RowsAffected == 0 {
+		err := errors.New("record not updated/ id not found")
+		return false, err
+	}
+	return true, nil
+}
